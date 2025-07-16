@@ -1,0 +1,53 @@
+'use client'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import API from '@/lib/api'
+import AnimatedPage from '@/components/AnimatedPage'
+
+export default function LoginPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+
+  const handleLogin = async () => {
+    try {
+      const res = await API.post('/auth/login', { email, password })
+      console.log("SUCCESSSSSSSSSSSSSSS")
+      console.log(res)
+      localStorage.setItem('token', res.data.token)
+      router.push('/diary')
+    } catch(error){
+      alert('Email atau password salah.')
+      console.error(error);
+    }
+  }
+
+  return (
+    <AnimatedPage>
+      <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-xl shadow-md border border-primary-100">
+        <h2 className="text-2xl font-bold text-center text-primary-800 mb-6">Masuk ke Diary App</h2>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            className="w-full border border-primary-200 rounded px-4 py-2"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            className="w-full border border-primary-200 rounded px-4 py-2"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 rounded"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </AnimatedPage>
+  )
+}

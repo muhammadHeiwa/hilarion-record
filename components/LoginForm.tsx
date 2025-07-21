@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import API from '@/lib/api'
+import { showToast } from './Toast'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ export default function LoginForm() {
       localStorage.setItem('token', res.data.token)
       router.push('/diary')
     } catch {
-      alert('Email atau password salah.')
+      showToast('Email atau password salah.', 'error')
     }
   }
 

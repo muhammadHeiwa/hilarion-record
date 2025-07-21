@@ -25,14 +25,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const login = (token: string) => {
         localStorage.setItem("token", token);
-        setIsLoggedIn(true);
         router.push("/diary");
+        setIsLoggedIn(true);
     };
 
     const logout = () => {
         localStorage.removeItem("token");
-        setIsLoggedIn(false);
         router.push("/login");
+        setIsLoggedIn(false);
     };
 
     return <AuthContext.Provider value={{ isLoggedIn, login, logout }}>{children}</AuthContext.Provider>;

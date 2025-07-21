@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import API from "@/lib/api";
 import AnimatedPage from "@/components/AnimatedPage";
 import { useAuth } from "@/context/AuthContext";
+import { showToast } from "@/components/Toast";
 
 export default function LoginPage() {
     const { login } = useAuth();
@@ -19,10 +20,11 @@ export default function LoginPage() {
         try {
             const res = await API.post("/auth/login", { email, password });
             login(res.data.token);
-            alert("Login berhasil!");
+            showToast("Login berhasil!", "success");
             router.push("/diary");
         } catch (error) {
-            alert("Email atau password salah.");
+            showToast("Email atau password salah.", "error");
+            console.error("Login error:", error);
         } finally {
             setLoading(false);
         }

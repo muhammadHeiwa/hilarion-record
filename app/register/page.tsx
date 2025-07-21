@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import API from '@/lib/api'
 import AnimatedPage from '@/components/AnimatedPage'
+import { showToast } from '../../components/Toast'
 
 export default function Register() {
   const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ export default function Register() {
       await API.post('/auth/register', { email, password })
       router.push('/login')
     } catch (err) {
-      alert('Register failed')
+      showToast('Register failed', 'error')
     }
   }
 

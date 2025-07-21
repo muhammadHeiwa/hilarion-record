@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import API from '@/lib/api'
 import AnimatedPage from '@/components/AnimatedPage'
+import { showToast } from '../../../components/Toast'
 
 export default function AddDiaryPage() {
   const [title, setTitle] = useState('')
@@ -13,7 +14,7 @@ export default function AddDiaryPage() {
   const router = useRouter()
 
   const handleSubmit = async () => {
-    if (!title.trim() || !content.trim()) return alert('Judul dan isi harus diisi.')
+    if (!title.trim() || !content.trim()) return showToast('Judul dan isi harus diisi.', 'warning')
     await API.post('/diary', {
       title,
       content,
